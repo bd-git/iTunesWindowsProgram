@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Collections;
 using iTunesLib;
+using System.IO;
 
 namespace iTunes_Program
 {
@@ -20,6 +21,69 @@ namespace iTunes_Program
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void RemoveOnestar()
+        {
+            //create a reference to iTunes
+            iTunesApp iTunes = new iTunesApp();
+
+            //get a reference to the collection of all tracks
+            IITTrackCollection tracks = iTunes.LibraryPlaylist.Tracks;
+
+            int trackCount = tracks.Count;
+            int numberChecked = 0;
+            int numberOnestar = 0;
+            ArrayList tracksToRemove = new ArrayList();
+
+            //setup the progress control
+            this.SetupProgress(trackCount);
+
+            for (int i = trackCount; i > 0; i--)
+            {
+                if (tracks[i].Kind == ITTrackKind.ITTrackKindFile)
+                {
+                    if (!this._shouldStop)
+                    {
+                        numberChecked++;
+                        this.IncrementProgress();
+                        this.UpdateLabel("Checking track # " + numberChecked.ToString() + " - " + tracks[i].Name);
+
+                        if (tracks[i].Rating == 20)
+                        {
+                                IITFileOrCDTrack fileTrack = (IITFileOrCDTrack)tracks[i];
+                                numberOnestar++;
+                                tracksToRemove.Add(tracks[i]);
+                        }
+                        
+                    }
+                }
+            }
+
+            this.SetupProgress(tracksToRemove.Count);
+
+            for (int i = 0; i < tracksToRemove.Count; i++)
+            {
+                IITFileOrCDTrack track = (IITFileOrCDTrack)tracksToRemove[i];
+                this.UpdateLabel("Removing " + track.Name);
+                this.IncrementProgress();
+                this.AddTrackToList((IITFileOrCDTrack)tracksToRemove[i]);
+
+                if (this.checkBoxRemove.Checked)
+                {
+                    if (TrashTrack(track.Location, track.Location.Replace(@"M:\Music", @"M:\Other Music\TrashedMusic")) == false )
+                    {
+                        this._shouldStop = true;
+                    }
+                    else
+                    {
+                        track.Delete();
+                    }
+                }
+            }
+
+            this.UpdateLabel("Checked " + numberChecked.ToString() + " tracks and " + numberOnestar.ToString() + " Onestar tracks found.");
+            this.SetupProgress(1);
         }
 
         private void RemoveDuplicates()
@@ -212,6 +276,33 @@ namespace iTunes_Program
             }
         }
 
+        private bool TrashTrack(string path1, string path2)
+        {
+            bool retVal = true;
+
+            try
+            {
+                // Ensure that the target does not exist. 
+                if (File.Exists(path2)) File.Delete(path2);
+                // Move the file.
+                File.Move(path1, path2);
+            }
+            catch (Exception e)
+            {
+                string message = e.ToString();
+                string caption = "Error Detected, continue?";
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult result;
+                result = MessageBox.Show(message, caption, buttons);
+
+                if (result == System.Windows.Forms.DialogResult.No)
+                {
+                    retVal = false;
+                }
+            }
+            return retVal;
+        }   
+
         private void CompleteOperation(string message)
         {
             if (this.label1.InvokeRequired)
@@ -264,5 +355,17 @@ namespace iTunes_Program
             this.worker = new Thread(this.RemoveDuplicates);
             this.worker.Start();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this._shouldStop = false;
+            this.buttonCancel.Enabled = true;
+            this.listView1.Items.Clear();
+
+            this.worker = new Thread(this.RemoveOnestar);
+            this.worker.Start();
+        }
+
+
     }
 }
