@@ -247,30 +247,28 @@ namespace iTunes_Program
                 }
             } //end for
 
+            string dirPath = @"D:\Music";
 
-                string dirPath = @"D:\Music";
+            List<string> dirs = new List<string>(Directory.EnumerateDirectories(dirPath));
+            List<string> files = new List<string>();
 
-                List<string> dirs = new List<string>(Directory.EnumerateDirectories(dirPath));
-                List<string> files = new List<string>();
-
-                foreach (var dir in dirs)
+            foreach (var dir in dirs)
+            {
+                foreach (var fileindir in Directory.EnumerateFiles(dir))
                 {
-                    foreach (var fileindir in Directory.EnumerateFiles(dir))
-                    {
                         files.Add(fileindir.ToLower());
-                    }
                 }
+            }
 
-                filesInLib.Sort();
-                files.Sort();
-                MessageBox.Show(filesInLib[0]);
+            filesInLib.Sort();
+            files.Sort();
 
             IEnumerable<string> diff = files.Except(filesInLib);
 
-                foreach(string s in diff)
-                {
-                    MessageBox.Show(s);
-                }
+            foreach(string s in diff)
+            {
+                if(!s.EndsWith(".db")) MessageBox.Show(s);
+            }
 
 
         } 
