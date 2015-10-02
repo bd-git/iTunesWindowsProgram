@@ -41,8 +41,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.checkBoxRemove = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.button3 = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.compareButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -51,29 +52,26 @@
             // progressBar1
             // 
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar1.Location = new System.Drawing.Point(0, 31);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.progressBar1.Location = new System.Drawing.Point(0, 25);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(1007, 28);
+            this.progressBar1.Size = new System.Drawing.Size(755, 23);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 11);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "label1";
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(463, 15);
-            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonCancel.Location = new System.Drawing.Point(347, 12);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(189, 28);
+            this.buttonCancel.Size = new System.Drawing.Size(142, 23);
             this.buttonCancel.TabIndex = 3;
             this.buttonCancel.Text = "Stop";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -81,10 +79,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(20, 15);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(15, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(189, 28);
+            this.button1.Size = new System.Drawing.Size(142, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "Find Dead Tracks";
             this.button1.UseVisualStyleBackColor = true;
@@ -100,10 +97,9 @@
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.Location = new System.Drawing.Point(0, 65);
-            this.listView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listView1.Location = new System.Drawing.Point(0, 53);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1005, 587);
+            this.listView1.Size = new System.Drawing.Size(755, 478);
             this.listView1.TabIndex = 4;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -129,10 +125,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(243, 15);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Location = new System.Drawing.Point(182, 12);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(189, 28);
+            this.button2.Size = new System.Drawing.Size(142, 23);
             this.button2.TabIndex = 5;
             this.button2.Text = "Find Duplicates";
             this.button2.UseVisualStyleBackColor = true;
@@ -146,62 +141,69 @@
             this.panel1.Controls.Add(this.button1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1007, 66);
+            this.panel1.Size = new System.Drawing.Size(755, 54);
             this.panel1.TabIndex = 5;
             // 
             // checkBoxRemove
             // 
             this.checkBoxRemove.AutoSize = true;
-            this.checkBoxRemove.Location = new System.Drawing.Point(687, 21);
-            this.checkBoxRemove.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBoxRemove.Location = new System.Drawing.Point(515, 17);
             this.checkBoxRemove.Name = "checkBoxRemove";
-            this.checkBoxRemove.Size = new System.Drawing.Size(167, 21);
+            this.checkBoxRemove.Size = new System.Drawing.Size(131, 17);
             this.checkBoxRemove.TabIndex = 6;
             this.checkBoxRemove.Text = "Remove When Found";
             this.checkBoxRemove.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.compareButton);
             this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.listView1);
-            this.panel2.Location = new System.Drawing.Point(0, 66);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Location = new System.Drawing.Point(0, 54);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1007, 561);
+            this.panel2.Size = new System.Drawing.Size(755, 456);
             this.panel2.TabIndex = 6;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(15, 0);
+            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(142, 22);
+            this.button3.TabIndex = 5;
+            this.button3.Text = "Find Onestar";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.progressBar1);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 718);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Location = new System.Drawing.Point(0, 554);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1007, 59);
+            this.panel3.Size = new System.Drawing.Size(755, 48);
             this.panel3.TabIndex = 7;
             // 
-            // button3
+            // compareButton
             // 
-            this.button3.Location = new System.Drawing.Point(20, 0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(189, 27);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Find Onestar";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.compareButton.Location = new System.Drawing.Point(182, 0);
+            this.compareButton.Name = "compareButton";
+            this.compareButton.Size = new System.Drawing.Size(142, 23);
+            this.compareButton.TabIndex = 6;
+            this.compareButton.Text = "Compare Lib and Dir";
+            this.compareButton.UseVisualStyleBackColor = true;
+            this.compareButton.Click += new System.EventHandler(this.compareButton_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1007, 777);
+            this.ClientSize = new System.Drawing.Size(755, 602);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel3);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "iTunes COM Sample";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -231,6 +233,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.CheckBox checkBoxRemove;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button compareButton;
     }
 }
 

@@ -218,6 +218,64 @@ namespace iTunes_Program
             this.SetupProgress(1);
         }
 
+        private void CompareMusicDir()
+        {
+            //create a reference to iTunes
+            iTunesApp iTunes = new iTunesApp();
+
+            //get a reference to the collection of all tracks
+            IITTrackCollection tracks = iTunes.LibraryPlaylist.Tracks;
+
+            int trackCount = tracks.Count;
+            int numberChecked = 0;
+            List<string> filesInLib = new List<string>();
+
+            //setup the progress control
+            this.SetupProgress(trackCount);
+
+            for (int i = trackCount; i > 0; i--)
+            {
+                if (tracks[i].Kind == ITTrackKind.ITTrackKindFile)
+                {
+                    if (!this._shouldStop)
+                    {
+                        numberChecked++;
+                        IITFileOrCDTrack fileTrack = (IITFileOrCDTrack)tracks[i];
+                        filesInLib.Add(fileTrack.Location.ToLower());
+
+                    }
+                }
+            } //end for
+
+
+                string dirPath = @"D:\Music";
+
+                List<string> dirs = new List<string>(Directory.EnumerateDirectories(dirPath));
+                List<string> files = new List<string>();
+
+                foreach (var dir in dirs)
+                {
+                    foreach (var fileindir in Directory.EnumerateFiles(dir))
+                    {
+                        files.Add(fileindir.ToLower());
+                    }
+                }
+
+                filesInLib.Sort();
+                files.Sort();
+                MessageBox.Show(filesInLib[0]);
+
+            IEnumerable<string> diff = files.Except(filesInLib);
+
+                foreach(string s in diff)
+                {
+                    MessageBox.Show(s);
+                }
+
+
+        } 
+        //end CompareMusicDir
+
         #region Message Handlers
         private void buttonCancel_Click(object sender, EventArgs e)
         {
@@ -364,6 +422,11 @@ namespace iTunes_Program
 
             this.worker = new Thread(this.RemoveOnestar);
             this.worker.Start();
+        }
+
+        private void compareButton_Click(object sender, EventArgs e)
+        {
+            CompareMusicDir();
         }
 
 
