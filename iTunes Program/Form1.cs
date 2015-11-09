@@ -47,8 +47,7 @@ namespace iTunes_Program
                     {
                         numberChecked++;
                         this.IncrementProgress();
-                        this.UpdateLabel("Checking track # " + numberChecked.ToString() + " - " + tracks[i].Name);
-
+                       
                         if (tracks[i].Rating == 20)
                         {
                                 IITFileOrCDTrack fileTrack = (IITFileOrCDTrack)tracks[i];
@@ -65,15 +64,22 @@ namespace iTunes_Program
             for (int i = 0; i < tracksToRemove.Count; i++)
             {
                 IITFileOrCDTrack track = (IITFileOrCDTrack)tracksToRemove[i];
-                this.UpdateLabel("Removing " + track.Name);
                 this.IncrementProgress();
                 this.AddTrackToList((IITFileOrCDTrack)tracksToRemove[i]);
-
                 if (this.checkBoxRemove.Checked)
                 {
-                    if (TrashTrack(track.Location, track.Location.Replace(@"M:\Music", @"M:\Other Music\TrashedMusic")) == false )
+                    //oldloc = PATH:\TO\FILE\Artist - Song.ext
+                    //newloc = Artist - Song.ext
+                    //newloc = M:\Other Music\TrashedMusic\Artist - Song.ext
+                    string oldloc = track.Location;
+                    string newloc = track.Location.Split('\\')[track.Location.Split('\\').Length - 1];
+                    newloc = @"M:\Other Music\TrashedMusic\" + newloc;
+                    
+                    //TrashTrack moves file @ oldloc to file @ newloc - returns 'true' on success
+                    if (!TrashTrack(oldloc,newloc))
                     {
                         this._shouldStop = true;
+                        break;
                     }
                     else
                     {
